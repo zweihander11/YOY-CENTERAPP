@@ -1,0 +1,192 @@
+fileFormatVersion: 2
+guid: 165f2fadfa35e49478dfa45ce7018dc5
+timeCreated: 1491253193
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: default
+    100002: //RootNode
+    100004: group1
+    100006: group2
+    100008: group3
+    100010: group4
+    100012: group5
+    100014: center
+    100016: left
+    100018: right
+    100020: center_group10
+    100022: group11_right
+    100024: group9_left
+    100026: group12
+    100028: group13
+    100030: group14
+    100032: groupouter
+    100034: menucollider
+    100036: group3_textlabel
+    100038: levelbtn
+    100040: largebtn
+    100042: smallbtn
+    100044: center_centeralone
+    100046: catSmall
+    400000: default
+    400002: //RootNode
+    400004: group1
+    400006: group2
+    400008: group3
+    400010: group4
+    400012: group5
+    400014: center
+    400016: left
+    400018: right
+    400020: center_group10
+    400022: group11_right
+    400024: group9_left
+    400026: group12
+    400028: group13
+    400030: group14
+    400032: groupouter
+    400034: menucollider
+    400036: group3_textlabel
+    400038: levelbtn
+    400040: largebtn
+    400042: smallbtn
+    400044: center_centeralone
+    400046: catSmall
+    2300000: default
+    2300002: group1
+    2300004: group2
+    2300006: group3
+    2300008: group4
+    2300010: group5
+    2300012: center
+    2300014: left
+    2300016: right
+    2300018: center_group10
+    2300020: group11_right
+    2300022: group9_left
+    2300024: group12
+    2300026: group13
+    2300028: group14
+    2300030: groupouter
+    2300032: menucollider
+    2300034: group3_textlabel
+    2300036: levelbtn
+    2300038: largebtn
+    2300040: smallbtn
+    2300042: center_centeralone
+    2300044: catSmall
+    3300000: default
+    3300002: group1
+    3300004: group2
+    3300006: group3
+    3300008: group4
+    3300010: group5
+    3300012: center
+    3300014: left
+    3300016: right
+    3300018: center_group10
+    3300020: group11_right
+    3300022: group9_left
+    3300024: group12
+    3300026: group13
+    3300028: group14
+    3300030: groupouter
+    3300032: menucollider
+    3300034: group3_textlabel
+    3300036: levelbtn
+    3300038: largebtn
+    3300040: smallbtn
+    3300042: center_centeralone
+    3300044: catSmall
+    4300000: default
+    4300002: group1
+    4300004: group2
+    4300006: group3
+    4300008: group4
+    4300010: group5
+    4300012: center
+    4300014: left
+    4300016: right
+    4300018: center_group10
+    4300020: group11_right
+    4300022: group9_left
+    4300024: group12
+    4300026: group13
+    4300028: group14
+    4300030: groupouter
+    4300032: menucollider
+    4300034: group3_textlabel
+    4300036: levelbtn
+    4300038: largebtn
+    4300040: smallbtn
+    4300042: center_centeralone
+    4300044: catSmall
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,797 @@
+{
+	"data":
+		{"center":
+			{	"nav_icon":"aregerg",
+				"firstPoiID":"1",
+				"firstFloorID":"1",
+				"firstPoiRotation":0,				
+				"floors":[  
+				{  
+			     "floorNumber":1,
+			     "uriMap":"http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489692012/MAPA_1.jpg",
+			     "pois":[  
+			        {  
+			           "rotationOffset":0,
+			           "soundGuide":"",
+			           "uri":"http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489501810/sala01_01_rvion6.jpg",
+			           "_id":"1",
+			           "floorID":"1",			           
+			           "tooltips":[  
+			              {  
+			                 "type":"GATE",
+			                 "text":"",
+			                 "position":[  
+			                    0.0,
+			                    0.0
+			                 ],
+			                 "soundGuide":"",
+			                 "poiId":"",
+			                 "linkedPoiID":2,
+			                 "linkedFloorID":1,
+			                 "width":0.0,
+			                 "height":0.0,
+			                 "source":"",
+			                 "attribution":"",
+			                 "attributionUri":"",
+			                 "sourceUriLeft":"",
+			                 "sourceUriRight":"",
+			                 "sourceVideo":"",
+			                 "sourcePano":""
+			              },
+                        {
+                            "type": "GATE",
+                            "text": "",
+                            "position": [
+                                90,
+                                0
+                            ],
+                            "soundGuide": "",
+                            "poiId": "1",
+                            "linkedPoiID": 4,
+                            "linkedFloorID":1,
+                            "width": -10.199999809265137,
+                            "height": -5.79998779296875,
+                            "source": "",
+                            "attribution": "",
+                            "attributionUri": "",
+                            "sourceUriLeft": "",
+                            "sourceUriRight": "",
+                            "sourceVideo": "",
+                            "sourcePano": ""
+                        },
+                        {
+                            "type": "PANELIMAGE",
+                            "text": "",
+                            "position": [
+                                -66,
+                                0.0
+                            ],
+                            "soundGuide": "",
+                            "poiId": "",
+                            "linkedPoiID": 2,
+                            "width": 0.0,
+                            "height": 0.0,
+                            "source": "http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489506390/01_01_kg3iml.jpg",
+                            "attribution": "",
+                            "attributionUri": "",
+                            "sourceUriLeft": "",
+                            "sourceUriRight": "",
+                            "sourceVideo": "",
+                            "sourcePano": ""
+                        },
+                        {
+                            "type": "PANELIMAGE",
+                            "text": "",
+                            "position": [
+                                -48,
+                                0.0
+                            ],
+                            "soundGuide": "",
+                            "poiId": "",
+                            "linkedPoiID": 2,
+                            "width": 0.0,
+                            "height": 0.0,
+                            "source": "http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489506391/01_02_aqflfy.jpg",
+                            "attribution": "",
+                            "attributionUri": "",
+                            "sourceUriLeft": "",
+                            "sourceUriRight": "",
+                            "sourceVideo": "",
+                            "sourcePano": ""
+                        },
+                         {  
+			                 "type":"PANELIMAGE",
+			                 "text":"",
+			                 "position":[  
+			                    -34,
+			                    0.0
+			                 ],
+			                 "soundGuide":"",
+			                 "poiId":"",
+			                 "linkedPoiID":2,
+			                 "linkedFloorID":1,
+			                 "width":0.0,
+			                 "height":0.0,
+			                 "source":"http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489506390/01_03_k0gyx0.jpg",
+			                 "attribution":"",
+			                 "attributionUri":"",
+			                 "sourceUriLeft":"",
+			                 "sourceUriRight":"",
+			                 "sourceVideo":"",
+			                 "sourcePano":""
+			              }
+			           ]
+			        },
+			        {  
+			           "rotationOffset":0,
+			           "soundGuide":"",
+			           "uri":"http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489501810/sala01_03_odikqk.jpg",
+			           "_id":"2",
+			           "floorID":"1",
+			           "tooltips":[  
+			              {  
+			                 "type":"GATE",
+			                 "text":"",
+			                 "position":[  
+			                    180,
+			                    0.0
+			                 ],
+			                 "soundGuide":"",
+			                 "poiId":"",
+			                 "linkedPoiID":1,
+			                 "linkedFloorID":1,
+			                 "width":0.0,
+			                 "height":0.0,
+			                 "source":"",
+			                 "attribution":"",
+			                 "attributionUri":"",
+			                 "sourceUriLeft":"",
+			                 "sourceUriRight":"",
+			                 "sourceVideo":"",
+			                 "sourcePano":""
+			              },
+                        {
+                            "type": "GATE",
+                            "text": "",
+                            "position": [
+                                90,
+                                0.0
+                            ],
+                            "soundGuide": "",
+                            "poiId": "",
+                            "linkedPoiID": 3,
+                            "linkedFloorID":1,
+                            "width": 0.0,
+                            "height": 0.0,
+                            "source": "",
+                            "attribution": "",
+                            "attributionUri": "",
+                            "sourceUriLeft": "",
+                            "sourceUriRight": "",
+                            "sourceVideo": "",
+                            "sourcePano": ""
+                        },
+                        {
+                            "type": "PANELIMAGE",
+                            "text": "",
+                            "position": [
+                                -130,
+                                0.0
+                            ],
+                            "soundGuide": "",
+                            "poiId": "",
+                            "linkedPoiID": "",
+                            "width": 0.0,
+                            "height": 0.0,
+                            "source": "http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489506392/02_nnzwxf.jpg",
+                            "attribution": "",
+                            "attributionUri": "",
+                            "sourceUriLeft": "",
+                            "sourceUriRight": "",
+                            "sourceVideo": "",
+                            "sourcePano": ""
+                        },
+                        {
+                            "type": "PANELIMAGE",
+                            "text": "",
+                            "position": [
+                                -66,
+                                0.0
+                            ],
+                            "soundGuide":"",
+                            "poiId": "",
+                            "linkedPoiID":"",
+                            "width": 0.0,
+                            "height": 0.0,
+                            "source": "http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489506391/03_tbcpcg.jpg",
+                            "attribution": "",
+                            "attributionUri": "",
+                            "sourceUriLeft": "",
+                            "sourceUriRight": "",
+                            "sourceVideo": "",
+                            "sourcePano": ""
+                        },
+                        {  
+			                 "type":"PANELIMAGE",
+			                 "text":"",
+			                 "position":[  
+			                    18.5,
+			                    0.0
+			                 ],
+			                 "soundGuide":"",
+			                 "poiId":"",
+			                 "linkedPoiID":"",
+			                 "width":0.0,
+			                 "height":0.0,
+			                 "source":"http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489506394/09_lepdes.jpg",
+			                 "attribution":"",
+			                 "attributionUri":"",
+			                 "sourceUriLeft":"",
+			                 "sourceUriRight":"",
+			                 "sourceVideo":"",
+			                 "sourcePano":""
+			              }
+			           ]
+			        },
+			        {  
+			           "rotationOffset":0,
+			           "soundGuide":"",
+			           "uri":"http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489501811/sala01_06_chdx8k.jpg",
+			           "_id":"3",
+			           "floorID":"1",
+			           "tooltips":[  
+			              {  
+			                 "type":"GATE",
+			                 "text":"",
+			                 "position":[  
+			                    -90,
+			                    0.0
+			                 ],
+			                 "soundGuide":"",
+			                 "poiId":"",
+			                 "linkedPoiID":2,
+			                 "linkedFloorID":1,
+			                 "width":0.0,
+			                 "height":0.0,
+			                 "source":"",
+			                 "attribution":"",
+			                 "attributionUri":"",
+			                 "sourceUriLeft":"",
+			                 "sourceUriRight":"",
+			                 "sourceVideo":"",
+			                 "sourcePano":""
+			              },
+                        {
+                            "type": "GATE",
+                            "text": "",
+                            "position": [
+                                180,
+                                0.0
+                            ],
+                            "soundGuide": "",
+                            "poiId": "",
+                            "linkedPoiID": 4,
+                            "linkedFloorID":1,
+                            "width": 0.0,
+                            "height": 0.0,
+                            "source": "",
+                            "attribution": "",
+                            "attributionUri": "",
+                            "sourceUriLeft": "",
+                            "sourceUriRight": "",
+                            "sourceVideo": "",
+                            "sourcePano": ""
+                        },
+
+
+                        {
+                            "type": "PANELIMAGE",
+                            "text": "",
+                            "position": [
+                                -30,
+                                0.0
+                            ],
+                            "soundGuide": "",
+                            "poiId": "",
+                            "linkedPoiID": 2,
+                            "width": 0.0,
+                            "height": 0.0,
+                            "source": "http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489506393/08_xzqusu.jpg",
+                            "attribution": "",
+                            "attributionUri": "",
+                            "sourceUriLeft": "",
+                            "sourceUriRight": "",
+                            "sourceVideo": "",
+                            "sourcePano": ""
+                        },
+                         {  
+			                 "type":"PANELIMAGE",
+			                 "text":"",
+			                 "position":[  
+			                    56,
+			                    0.0
+			                 ],
+			                 "soundGuide":"",
+			                 "poiId":"",
+			                 "linkedPoiID":2,
+			                 "width":0.0,
+			                 "height":0.0,
+			                 "source":"http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489506396/07_v9ph0i.jpg",
+			                 "attribution":"",
+			                 "attributionUri":"",
+			                 "sourceUriLeft":"",
+			                 "sourceUriRight":"",
+			                 "sourceVideo":"",
+			                 "sourcePano":""
+			              }
+			           ]
+			        },
+			        {  
+			           "rotationOffset":0,
+			           "soundGuide":"",
+			           "uri":"http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489501810/sala01_04_pnqztc.jpg",
+			           "_id":"4",
+			           "floorID":"1",
+			           "tooltips":[  
+			              {  
+			                 "type":"GATE",
+			                 "text":"",
+			                 "position":[  
+			                    -90,
+			                    0.0
+			                 ],
+			                 "soundGuide":"",
+			                 "poiId":"",
+			                 "linkedPoiID":8,
+			                 "linkedFloorID":2,
+			                 "width":0.0,
+			                 "height":0.0,
+			                 "source":"",
+			                 "attribution":"",
+			                 "attributionUri":"",
+			                 "sourceUriLeft":"",
+			                 "sourceUriRight":"",
+			                 "sourceVideo":"",
+			                 "sourcePano":""
+			              },
+                        {
+                            "type": "GATE",
+                            "text": "",
+                            "position": [
+                                0.0,
+                                0.0
+                            ],
+                            "soundGuide": "",
+                            "poiId": "",
+                            "linkedPoiID":"3",
+                            "linkedFloorID":1,
+                            "width": 0.0,
+                            "height": 0.0,
+                            "source": "",
+                            "attribution": "",
+                            "attributionUri": "",
+                            "sourceUriLeft": "",
+                            "sourceUriRight": "",
+                            "sourceVideo": "",
+                            "sourcePano": ""
+                        },
+                         {  
+			                 "type":"PANELIMAGE",
+			                 "text":"",
+			                 "position":[  
+			                    80,
+			                    0.0
+			                 ],
+			                 "soundGuide":"",
+			                 "poiId":"",
+			                 "linkedPoiID":"",
+			                 "width":0.0,
+			                 "height":0.0,
+			                 "source":"http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489506401/04_01_ygzvhg.jpg",
+			                 "attribution":"",
+			                 "attributionUri":"",
+			                 "sourceUriLeft":"",
+			                 "sourceUriRight":"",
+			                 "sourceVideo":"",
+			                 "sourcePano":""
+			              }
+			           ]
+			        }
+			     ]
+			  },{			  
+			  "floorNumber":2,
+			  "uriMap":"http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489692012/MAPA_1.jpg",
+			     "pois":[  
+			        {  
+			           "rotationOffset":0,
+			           "soundGuide":"",
+			           "uri":"http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489501810/sala01_01_rvion6.jpg",
+			           "_id":"5",
+			           "floorID":"2",
+			           "tooltips":[  
+			              {  
+			                 "type":"GATE",
+			                 "text":"",
+			                 "position":[  
+			                    0.0,
+			                    0.0
+			                 ],
+			                 "soundGuide":"",
+			                 "poiId":"",
+			                 "linkedPoiID":1,
+			                 "linkedFloorID":2,
+			                 "width":0.0,
+			                 "height":0.0,
+			                 "source":"",
+			                 "attribution":"",
+			                 "attributionUri":"",
+			                 "sourceUriLeft":"",
+			                 "sourceUriRight":"",
+			                 "sourceVideo":"",
+			                 "sourcePano":""
+			              },
+                        {
+                            "type": "GATE",
+                            "text": "",
+                            "position": [
+                                90,
+                                0
+                            ],
+                            "soundGuide": "",
+                            "poiId": "1",
+                            "linkedPoiID": 4,
+                            "linkedFloorID":2,
+                            "width": -10.199999809265137,
+                            "height": -5.79998779296875,
+                            "source": "",
+                            "attribution": "",
+                            "attributionUri": "",
+                            "sourceUriLeft": "",
+                            "sourceUriRight": "",
+                            "sourceVideo": "",
+                            "sourcePano": ""
+                        },
+                        {
+                            "type": "PANELIMAGE",
+                            "text": "",
+                            "position": [
+                                -66,
+                                0.0
+                            ],
+                            "soundGuide": "",
+                            "poiId": "",
+                            "linkedPoiID": 2,
+                            "width": 0.0,
+                            "height": 0.0,
+                            "source": "http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489506390/01_01_kg3iml.jpg",
+                            "attribution": "",
+                            "attributionUri": "",
+                            "sourceUriLeft": "",
+                            "sourceUriRight": "",
+                            "sourceVideo": "",
+                            "sourcePano": ""
+                        },
+                        {
+                            "type": "PANELIMAGE",
+                            "text": "",
+                            "position": [
+                                -48,
+                                0.0
+                            ],
+                            "soundGuide": "",
+                            "poiId": "",
+                            "linkedPoiID": 2,
+                            "width": 0.0,
+                            "height": 0.0,
+                            "source": "http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489506391/01_02_aqflfy.jpg",
+                            "attribution": "",
+                            "attributionUri": "",
+                            "sourceUriLeft": "",
+                            "sourceUriRight": "",
+                            "sourceVideo": "",
+                            "sourcePano": ""
+                        },
+                         {  
+			                 "type":"PANELIMAGE",
+			                 "text":"",
+			                 "position":[  
+			                    -34,
+			                    0.0
+			                 ],
+			                 "soundGuide":"",
+			                 "poiId":"",
+			                 "linkedPoiID":2,
+			                 "width":0.0,
+			                 "height":0.0,
+			                 "source":"http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489506390/01_03_k0gyx0.jpg",
+			                 "attribution":"",
+			                 "attributionUri":"",
+			                 "sourceUriLeft":"",
+			                 "sourceUriRight":"",
+			                 "sourceVideo":"",
+			                 "sourcePano":""
+			              }
+			           ]
+			        },
+			        {  
+			           "rotationOffset":0,
+			           "soundGuide":"",
+			           "uri":"http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489501810/sala01_03_odikqk.jpg",
+			           "_id":"6",
+			           "floorID":"1",
+			           "tooltips":[  
+			              {  
+			                 "type":"GATE",
+			                 "text":"",
+			                 "position":[  
+			                    180,
+			                    0.0
+			                 ],
+			                 "soundGuide":"",
+			                 "poiId":"",
+			                 "linkedPoiID":1,
+			                 "linkedFloorID":2,
+			                 "width":0.0,
+			                 "height":0.0,
+			                 "source":"",
+			                 "attribution":"",
+			                 "attributionUri":"",
+			                 "sourceUriLeft":"",
+			                 "sourceUriRight":"",
+			                 "sourceVideo":"",
+			                 "sourcePano":""
+			              },
+                        {
+                            "type": "GATE",
+                            "text": "",
+                            "position": [
+                                90,
+                                0.0
+                            ],
+                            "soundGuide": "",
+                            "poiId": "",
+                            "linkedPoiID": 3,
+                            "linkedFloorID":2,
+                            "width": 0.0,
+                            "height": 0.0,
+                            "source": "",
+                            "attribution": "",
+                            "attributionUri": "",
+                            "sourceUriLeft": "",
+                            "sourceUriRight": "",
+                            "sourceVideo": "",
+                            "sourcePano": ""
+                        },
+                        {
+                            "type": "PANELIMAGE",
+                            "text": "",
+                            "position": [
+                                -130,
+                                0.0
+                            ],
+                            "soundGuide": "",
+                            "poiId": "",
+                            "linkedPoiID": 2,
+                            "width": 0.0,
+                            "height": 0.0,
+                            "source": "http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489506392/02_nnzwxf.jpg",
+                            "attribution": "",
+                            "attributionUri": "",
+                            "sourceUriLeft": "",
+                            "sourceUriRight": "",
+                            "sourceVideo": "",
+                            "sourcePano": ""
+                        },
+                        {
+                            "type": "PANELIMAGE",
+                            "text": "",
+                            "position": [
+                                -66,
+                                0.0
+                            ],
+                            "soundGuide": "",
+                            "poiId": "",
+                            "linkedPoiID": 2,
+                            "width": 0.0,
+                            "height": 0.0,
+                            "source": "http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489506391/03_tbcpcg.jpg",
+                            "attribution": "",
+                            "attributionUri": "",
+                            "sourceUriLeft": "",
+                            "sourceUriRight": "",
+                            "sourceVideo": "",
+                            "sourcePano": ""
+                        },
+                        {  
+			                 "type":"PANELIMAGE",
+			                 "text":"",
+			                 "position":[  
+			                    18.5,
+			                    0.0
+			                 ],
+			                 "soundGuide":"",
+			                 "poiId":"",
+			                 "linkedPoiID":2,
+			                 "width":0.0,
+			                 "height":0.0,
+			                 "source":"http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489506394/09_lepdes.jpg",
+			                 "attribution":"",
+			                 "attributionUri":"",
+			                 "sourceUriLeft":"",
+			                 "sourceUriRight":"",
+			                 "sourceVideo":"",
+			                 "sourcePano":""
+			              }
+			           ]
+			        },
+			        {  
+			           "rotationOffset":0,
+			           "soundGuide":"",
+			           "uri":"http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489501811/sala01_06_chdx8k.jpg",
+			           "_id":"7",
+			           "floorID":"2",
+			           "tooltips":[  
+			              {  
+			                 "type":"GATE",
+			                 "text":"",
+			                 "position":[  
+			                    -90,
+			                    0.0
+			                 ],
+			                 "soundGuide":"",
+			                 "poiId":"",
+			                 "linkedPoiID":1,
+			                 "linkedFloorID":1,
+			                 "width":0.0,
+			                 "height":0.0,
+			                 "source":"",
+			                 "attribution":"",
+			                 "attributionUri":"",
+			                 "sourceUriLeft":"",
+			                 "sourceUriRight":"",
+			                 "sourceVideo":"",
+			                 "sourcePano":""
+			              },
+                        {
+                            "type": "GATE",
+                            "text": "",
+                            "position": [
+                                180,
+                                0.0
+                            ],
+                            "soundGuide": "",
+                            "poiId": "",
+                            "linkedPoiID": 5,
+                            "linkedFloorID":2,
+                            "width": 0.0,
+                            "height": 0.0,
+                            "source": "",
+                            "attribution": "",
+                            "attributionUri": "",
+                            "sourceUriLeft": "",
+                            "sourceUriRight": "",
+                            "sourceVideo": "",
+                            "sourcePano": ""
+                        },
+
+
+                        {
+                            "type": "PANELIMAGE",
+                            "text": "",
+                            "position": [
+                                -30,
+                                0.0
+                            ],
+                            "soundGuide": "",
+                            "poiId": "",
+                            "linkedPoiID": 2,
+                            "width": 0.0,
+                            "height": 0.0,
+                            "source": "http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489506393/08_xzqusu.jpg",
+                            "attribution": "",
+                            "attributionUri": "",
+                            "sourceUriLeft": "",
+                            "sourceUriRight": "",
+                            "sourceVideo": "",
+                            "sourcePano": ""
+                        },
+                         {  
+			                 "type":"PANELIMAGE",
+			                 "text":"",
+			                 "position":[  
+			                    56,
+			                    0.0
+			                 ],
+			                 "soundGuide":"",
+			                 "poiId":"",
+			                 "linkedPoiID":2,
+			                 "width":0.0,
+			                 "height":0.0,
+			                 "source":"http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489506396/07_v9ph0i.jpg",
+			                 "attribution":"",
+			                 "attributionUri":"",
+			                 "sourceUriLeft":"",
+			                 "sourceUriRight":"",
+			                 "sourceVideo":"",
+			                 "sourcePano":""
+			              }
+			           ]
+			        },
+			        {  
+			           "rotationOffset":0,
+			           "soundGuide":"",
+			           "uri":"http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489501810/sala01_04_pnqztc.jpg",
+			           "_id":"8",
+			           "floorID":"2",
+			           "tooltips":[  
+			              {  
+			                 "type":"GATE",
+			                 "text":"",
+			                 "position":[  
+			                    -90,
+			                    0.0
+			                 ],
+			                 "soundGuide":"",
+			                 "poiId":"",
+			                 "linkedPoiID":7,
+			                 "linkedFloorID":2,
+			                 "width":0.0,
+			                 "height":0.0,
+			                 "source":"",
+			                 "attribution":"",
+			                 "attributionUri":"",
+			                 "sourceUriLeft":"",
+			                 "sourceUriRight":"",
+			                 "sourceVideo":"",
+			                 "sourcePano":""
+			              },
+                        {
+                            "type": "GATE",
+                            "text": "",
+                            "position": [
+                                0.0,
+                                0.0
+                            ],
+                            "soundGuide": "",
+                            "poiId": "",
+                            "linkedPoiID": 5,
+                            "linkedFloorID":2,
+                            "width": 0.0,
+                            "height": 0.0,
+                            "source": "",
+                            "attribution": "",
+                            "attributionUri": "",
+                            "sourceUriLeft": "",
+                            "sourceUriRight": "",
+                            "sourceVideo": "",
+                            "sourcePano": ""
+                        },
+                         {  
+			                 "type":"PANELIMAGE",
+			                 "text":"",
+			                 "position":[  
+			                    80,
+			                    0.0
+			                 ],
+			                 "soundGuide":"",
+			                 "poiId":"",
+			                 "linkedPoiID":"",
+			                 "width":0.0,
+			                 "height":0.0,
+			                 "source":"http://res.cloudinary.com/dt9f3ryd6/image/upload/v1489506401/04_01_ygzvhg.jpg",
+			                 "attribution":"",
+			                 "attributionUri":"",
+			                 "sourceUriLeft":"",
+			                 "sourceUriRight":"",
+			                 "sourceVideo":"",
+			                 "sourcePano":""
+			              }
+			           ]
+			        }
+			     ]
+			  }
+
+			]
+		}
+	}
+}
