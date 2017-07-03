@@ -1360,56 +1360,11 @@ public class CreateMap : MonoBehaviour
 	public void LoadCategories()
 	{
 
-		//Read category list stored in the Center object
-		//print("Loading Categories");
-
 
 		categories = new List<string>();
-		/*
-		foreach (Floor f in centerTemp.floors)
-		{
-
-			foreach (Poi p in f.pois)
-			{
-
-				foreach (Tooltip t in p.tooltips)
-				{
-					
-					foreach (string cat in t.category)
-					{
-
-						if (cat == null)
-						{
-							categories.Add (null);
-							//TODO what happens when there's an empty category in json?
-
-						}
-						else
-						{
-
-							categories.Add (cat);
-
-
-						}
-
-					}
-
-					
-				}
-				
-			}
-
-			
-		}
-
-*/
+	
 		pieces = new List<Tooltip>();
 		//dictCategories = new Dictionary<object, List<string>>();
-
-
-
-
-
 
 		foreach (Floor f in centerTemp.floors)
 		{

@@ -54,7 +54,7 @@ public class GenericMenu : MonoBehaviour
 	static GenericMenu instance = null;                        			 	// Set a singleton so this object persists and can be accessed from different scripts
 
 	public List<string> selectCategories= new List<string>();  		    		// List of selected categories
-	public List<string> intersectCategories = new List<string>();
+	public List<string> intersectedCategories = new List<string>();
 	public List<Tooltip> intersectTooltip = new List<Tooltip>();
 	public List<string> catDisplayText;
 	private GameObject obj;
@@ -66,7 +66,9 @@ public class GenericMenu : MonoBehaviour
 	private int displayCategoryCount = 20;	 						// The amount of categories to display in the menu. Fixed to fit menu design
 	private List<GameObject> categoryButtons;
 	public int currentCatPage;
-
+	public int incremental ; 							// A factor to determine the distance between breadcrum catogeories
+	private int inc;
+	private List<string> tempIntersected =  new List<string>();
 
 	public static GenericMenu Instance
 	{
@@ -114,15 +116,11 @@ public class GenericMenu : MonoBehaviour
 			DontDestroyOnLoad (gameObject);
 		}
 
-		//centralPanel.GetComponent<Mesh>().bounds.
-		// Set panel distance from center/pivot
-		// Set bend angle
-
 
 		appController = sphereTemplate.GetComponent<CreateMap>();		 // Obtain reference to map creator from the main sphere object
 
 
-		//centerContainer = appController.centerTemp; // Obtain reference 
+
 
 		animator = this.GetComponent<Animator>();
 
@@ -135,20 +133,7 @@ public class GenericMenu : MonoBehaviour
 
 		centralPanel.transform.GetChild(0).GetComponent<ControllerMap>().CalltoScript();
 
-	// Generated level buttons
-	/*
-	for (int i = 0; i < 3; i++)
-		
-	{
-
-	GameObject lvlbtn = Instantiate (levelbtnPrefab, centralPanel.transform);
-
-	levelButtons.Add (lvlbtn);
-		
-	levelButtons[i].transform.Translate (0,-1,0);
-	}
-	*/	
-
+	
 
 		SetMenuState (MenuState.PRELOADING); 
 
@@ -300,44 +285,35 @@ public class GenericMenu : MonoBehaviour
 
 		appController = sphereTemplate.GetComponent<CreateMap>();
 		availableCategories = appController.categories;
-		//print ("Menu Updated" );
+	
 		
 		SetMenuState (MenuState.ACTIVE);
 
-//		leftPanel.GetComponent<GenericPanel>().UpdatePanel();
-//		centralPanel.GetComponent<GenericPanel>().UpdatePanel();
-//		rightPanel.GetComponent<GenericPanel>().UpdatePanel();
+
 	}
 
 	public void AddSelectCategories(string nameCategory)
 	{
-
-		print ("Added: " + nameCategory);
-
+		
 		if (!selectCategories.Contains (nameCategory)) 
-	{
+		{
 
 			selectCategories.Add (nameCategory);
-
-			//Add breadcrum prefab
-			GameObject catPrefab = Instantiate (contentBarPrefab, followUpPanel.transform,false);
+			GameObject catPrefab = Instantiate (contentBarPrefab, followUpPanel.transform,false); 				//Add breadcrum prefab
 			catPrefab.transform.GetChild (0).GetComponent<TextMeshPro> ().text = nameCategory;
-			//catPrefab.transform.Translate (0,0.6f, 0);
-			//catPrefab.transform.Rotate (0, catPrefab.transform.GetSiblingIndex () * 18, 0);
-			//catPrefab.transform.Rotate (-1, -50, 0);
-			//print (catPrefab.transform.GetSiblingIndex ());
+			catPrefab.transform.Translate (0,0.6f, 0);
+			catPrefab.transform.Rotate (0, inc, 0);
 			catPrefab.SetActive (true);
-
 			catPrefab.AddComponent<EventTrigger> ();
 			EventTrigger.Entry entry = new EventTrigger.Entry ();
 			entry.eventID = EventTriggerType.PointerClick;
-
 			entry.callback.AddListener ((data) => DeleteSelectCategories (nameCategory, catPrefab));
 			catPrefab.GetComponent<EventTrigger> ().triggers.Add (entry);
-
-
+			inc = inc + incremental;										 // Multiplier factor to add categories and move them consecutively
 			UpdateAddIntersection ();
+
 		}
+
 	}
 
 	public void DeleteSelectCategories(string nameCategory, GameObject bcprefab)
@@ -354,93 +330,78 @@ public class GenericMenu : MonoBehaviour
 
 	public void UpdateAddIntersection()
 	{
+		
+		var intersected = selectCategories.Intersect (appController.categories);
 
-
-		if (intersectCategories.Count.Equals(0))
+		foreach (string intcat in intersected) 
 		{
-			var intersect = selectCategories.Intersect(availableCategories);
 
-			foreach (string s in intersect)
+			if (!intersectedCategories.Contains (intcat))
 			{
-				intersectCategories.Add(s);
-			}
 
-		}
-		else
-		{
-			var intersect = selectCategories.Intersect(availableCategories);
-			foreach (string s in intersect)
-			{
-				if (!intersectCategories.Contains(s))
-				{
-					intersectCategories.Add(s);
-				}
+				intersectedCategories.Add (intcat);
+				print ("Intersected List " + intcat);
 
 			}
 
 
+			
 		}
 
 
-		foreach (string s in selectCategories)
-		{
-			Debug.Log("Seleccionada " + s);
-		}
-
-		foreach (string s in intersectCategories)
-		{
-			Debug.Log("Interceptada " + s);
-		}
 
 
-		foreach ( Tooltip t in appController.pieces) 
-		{
-			var areEquivalent = (t.category.Count() == intersectCategories.Count()) && !t.category.Except(intersectCategories).Any();
 
-			if (areEquivalent.Equals(true))
-			{
-
-				if (!intersectTooltip.Contains(t))
-				{
-					Debug.Log(areEquivalent);
-					intersectTooltip.Add(t);
-					tooltipState = "added";
-					Debug.Log (tooltipState);
-				}
-
-			}
-		}
 
 		UpdateIntersectTooltip();
 
-		// var intersect = selectCategories.Intersect(availableCategories);
-		/*
-         foreach (string s in intersect)
-         {
-             intersectCategories.Add(s);
-         }
-         foreach (string s in intersectCategories)
-         {
-             Debug.Log(s);
-         }
-
-         */
+	
 	}
 
 
-	private void UpdateIntersectTooltip()
+	private void UpdateIntersectTooltip()  // TODO: Check this function as it might not be working properly
 	{
-		for (int i = 0; i < intersectTooltip.Count; i++)
+
+
+		foreach (Tooltip ttip in appController.pieces) 
 		{
-			var areEquivalent = (intersectTooltip[i].category.Count() == intersectCategories.Count()) && !intersectTooltip[i].category.Except(intersectCategories).Any();
-			if (areEquivalent.Equals(false))
+
+
+			foreach (string item in ttip.category) 
 			{
-				Debug.Log("Antes borrado " + intersectTooltip.Count);
-				intersectTooltip.Remove(intersectTooltip[i]);
-				tooltipState = "deleted";
-				Debug.Log("Despues borrado " + intersectTooltip.Count);
+				
+				if (intersectedCategories.Contains (item))
+				{
+					
+					print ("Intersected Item in tooltip " );
+					tempIntersected.Add (item);
+					intersectTooltip.Add (ttip);
+
+
+				}
+
+				/*if (tempIntersected.Equals(intersectedCategories)) 
+				{
+
+					intersectTooltip.Add (ttip);
+					print ("Iguales: " );
+
+				}
+				*/				
 			}
-		}      
+
+
+			if (rightPanel.activeSelf != null)			 // Initializes browser panel if there is one
+			{
+
+
+				rightPanel.transform.GetComponentInChildren<BrowserPanel> ().InitializePanel ();
+			}
+
+		}  
+
+
+
 	}
 
 
@@ -449,20 +410,20 @@ public class GenericMenu : MonoBehaviour
 
 
 		var intersect = selectCategories.Intersect(availableCategories);
-		intersectCategories.Clear();
+		intersectedCategories.Clear();
 		Debug.Log(intersect.Count());
 
 	foreach (string s in intersect)
 		{
 			Debug.Log("Intersects " + s);
-			if (!intersectCategories.Contains(s))
+			if (!intersectedCategories.Contains(s))
 			{
-				intersectCategories.Add(s);
+				intersectedCategories.Add(s);
 			}
 
 		}
 
-	foreach (string s in intersectCategories)
+	foreach (string s in intersectedCategories)
 		{
 			Debug.Log("Interceptada " + s);
 		}
@@ -501,6 +462,7 @@ public class GenericMenu : MonoBehaviour
 		
 			}
 
+
 			for (int e = appController.categories.Count; e <= displayCategoryCount; e++) 
 			{
 				
@@ -526,28 +488,27 @@ public class GenericMenu : MonoBehaviour
 		}
 
 
-		for (int j = 1; j < leftPanel.transform.childCount; j++)
+	
+
+		foreach (Transform obj in leftPanel.transform)
 		{
 
-
-			obj = leftPanel.transform.GetChild(j).gameObject;
-			if (obj.gameObject.activeSelf)
+			if (obj.gameObject.tag == "category") 
 			{
-				print (obj.transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text);
-				obj.AddComponent<EventTrigger>();
+
+
+				obj.gameObject.AddComponent<EventTrigger>();
 				EventTrigger.Entry entrybtn = new EventTrigger.Entry ();
 				entrybtn.eventID = EventTriggerType.PointerClick;
-				entrybtn.callback.AddListener ((data) => AddSelectCategories(obj.name));
-				obj.GetComponent<EventTrigger> ().triggers.Add (entrybtn);
+				entrybtn.callback.AddListener ((data) => AddSelectCategories(obj.gameObject.name));
+				obj.gameObject.GetComponent<EventTrigger> ().triggers.Add (entrybtn);
+
+
 
 			}
 
-
-
-
-
+			
 		}
-
 
 
 

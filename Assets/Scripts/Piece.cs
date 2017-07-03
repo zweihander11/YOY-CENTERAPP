@@ -26,7 +26,7 @@ public class Piece : MonoBehaviour
 		
 		
 	//	print ( Mathf.Atan (lookAtTarget.transform.position.z / (Vector3.Distance (lookAtTarget.transform.position, this.GetComponent<MeshCollider> ().bounds.center))));
-		if (  Mathf.Atan (lookAtTarget.transform.position.z / (Vector3.Distance (lookAtTarget.transform.position, this.GetComponent<MeshCollider> ().bounds.center))) < 2
+	/*	if (  Mathf.Atan (lookAtTarget.transform.position.z / (Vector3.Distance (lookAtTarget.transform.position, this.GetComponent<MeshCollider> ().bounds.center))) < 2
 			&& Mathf.Atan (lookAtTarget.transform.position.z / (Vector3.Distance (lookAtTarget.transform.position, this.GetComponent<MeshCollider> ().bounds.center)))> -2
 		)
 		{
@@ -35,7 +35,7 @@ public class Piece : MonoBehaviour
 	
 		}
 
-
+*/
 
 
 	}
