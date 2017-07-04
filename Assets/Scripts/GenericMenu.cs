@@ -1,7 +1,4 @@
-﻿
-
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Collections.Specialized;
@@ -395,7 +392,9 @@ public class GenericMenu : MonoBehaviour
 			{
 
 
-				rightPanel.transform.GetComponentInChildren<BrowserPanel> ().InitializePanel ();
+				rightPanel.transform.GetComponentInChildren<BrowserPanel>().InitializePanel();
+
+
 			}
 
 		}  
@@ -447,7 +446,7 @@ public class GenericMenu : MonoBehaviour
 
 
 
-		if (appController.categories.Count < displayCategoryCount)  /// If there's only 1 page
+		if (appController.categories.Count < displayCategoryCount)  				// If there's only 1 page
 		{ 
 			
 			for (int i = 1; i < appController.categories.Count; i++)
