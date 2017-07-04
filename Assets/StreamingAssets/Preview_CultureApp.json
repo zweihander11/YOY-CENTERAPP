@@ -7,7 +7,7 @@
    "floors":[  
       {  
          "_id":"369ad7cd-fcc0-4149-98ed-aad88085bdfa",
-         "uriMap":"Centros/Centroarte/Pisos/Piso2/Map2.jpg",
+         "uriMap":"Centros/Centroarte/Pisos/Piso1/Mapa_piso_1.png",
          "floorNumber":0,
          "pois":[  
             {  
@@ -6291,7 +6291,7 @@
       },
       {  
          "_id":"e182bd20-7096-40a0-a514-7e27d2b44dd9",
-         "uriMap":"Centros/Centroarte/Pisos/Piso2/Map2.jpg",
+         "uriMap":"Centros/Centroarte/Pisos/Piso2/Mapa_piso_2.png",
          "floorNumber":1,
          "pois":[  
             {  
@@ -8503,7 +8503,7 @@
       },
       {  
          "_id":"c6ca50a4-ce5c-4e0d-a7b9-3da2b97499c4",
-         "uriMap":"Centros/Centroarte/Pisos/Piso2/Map2.jpg",
+         "uriMap":"Centros/Centroarte/Pisos/Piso3/Mapa_piso_0.png",
          "floorNumber":2,
          "pois":[  
             {  
