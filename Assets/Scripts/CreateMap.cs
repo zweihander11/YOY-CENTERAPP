@@ -29,6 +29,8 @@ public class CreateMap : MonoBehaviour
 		}
 	}
 
+	Loader loader;
+	public GvrViewer gvrViewer;
 	MediaPlayerCtrl mediaPlayer;
 	MediaPlayerCtrl audioMediaPlayer;
 	public GameObject sphere3;
@@ -37,7 +39,7 @@ public class CreateMap : MonoBehaviour
 	//Fields
 	public string serverUrl;
 	public GameObject Button;
-	//public Canvas canvas; 
+	public Canvas canvas; 
 	public Center centerTemp; 							 //Changed this to publi in order to be accessible by menu
 	private Poi poiTemp;
 	private Button newButton;
@@ -144,31 +146,15 @@ public class CreateMap : MonoBehaviour
 
 	IEnumerator Start()
 	{
-
+		
+		loader = GameObject.Find ("Loader").GetComponent<Loader>(); // This script now requires a loader object to be present from prior scene
+		gvrViewer.VRModeEnabled = loader.vrMode;
 		MainCamera = GameObject.Find ("Main Camera");
 		mediaPlayer = videoPlane.transform.GetChild(0).GetComponent<MediaPlayerCtrl>();
 		audioMediaPlayer = audioManager.GetComponent<MediaPlayerCtrl>();
-		//SetAppState(AppStateType.STATE_APP_LOADING); 						//We call this funtion to set the LOADING state as initial state when the app starts
+		SetAppState(AppStateType.STATE_APP_LOADING); 						//We call this funtion to set the LOADING state as initial state when the app starts
 
-		//FUNCION CORRESPONDIENTE
-		//getJSON = GameObject.Find("sphere3").GetComponent<GetJSON>();     //Capturamos el objeto sphere3 y todo su contenido
-		/*
-        while (getJSON.end == false)                                       //Esperamos que termine de leer el JSON
-        {
-            yield return new WaitForSeconds(0.2f);
 
-        }
-
-        if (getJSON.end == true)
-        {       
-            sphere3 = gameObject;
-            centerTemp = getJSON.center;                                    //Rescatamos el objeto scene que contiene toda la informacion del JSON   
-            //Debug.Log(centerTemp.firstPoiID);
-            ApplyScene(centerTemp.firstPoiID);                            //LLamamos a aplicar la primera escena por primera vez, rescantando el firsphotoId
-            BrowseTooltip(poiTemp);                                       //Buscamos los tootltip que tiene la imagen
-
-        }
-        */
 
 
 		//FUNCION FIX PROTOTIPE   
@@ -225,6 +211,7 @@ public class CreateMap : MonoBehaviour
 		case AppStateType.STATE_APP_LOADING:
 			// Debug.Log("Out of Loading State");
 			//SetAppState (nextState);
+			loadingMessage.SetActive(false);
 			break;
 		case AppStateType.STATE_APP_IMAGE:
 			// Debug.Log("Out of Image State");    
@@ -330,11 +317,11 @@ public class CreateMap : MonoBehaviour
 			menuContainer.transform.Rotate(new Vector3(0, camRotAngle, 0), Space.Self);
 			menuContainer.SetActive(true);
 			videoPlane.SetActive(false);
-			navPanel.SetActive(false);
+			//navPanel.SetActive(false);
 			menuContainer.SetActive(false);
 			audioPanel.SetActive(false);
 			tooltipAudioPanel.SetActive(false);
-			loadingMessage.GetComponent<Text>().text = "Cargando...";
+			//loadingMessage.GetComponent<Text>().text = "Cargando...";
 			loadingMessage.SetActive(true);
 
 			imagePlane.transform.rotation = new Quaternion(0, 0, 0, 0);    //Rotate the image plane so it's located in front of the camera. Reset rotation first
@@ -1409,6 +1396,9 @@ public class CreateMap : MonoBehaviour
 
 
 	}
+
+
+
 
 }
 
