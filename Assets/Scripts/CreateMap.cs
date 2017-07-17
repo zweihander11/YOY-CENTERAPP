@@ -8,6 +8,7 @@ using UnityEngine.VR;
 using TMPro;
 using System.Linq;
 using System.Collections.Specialized;
+using System.IO;
 
 public class CreateMap : MonoBehaviour
 {
@@ -109,14 +110,16 @@ public class CreateMap : MonoBehaviour
 	private bool stop = false;   
 
 
-	
+
 	public int posFloor;
 	public IGvrPointer pointer;
 
 
 
 
-
+	private Texture2D tex;  					// Declaration to hold temporary downloaded textures
+	public List<string> preloaded = new List<string>();		// Texture ids saved from preloading function
+	public List<Texture2D> savedImages = new List<Texture2D>();	// A list where we store downloaded 360 image textures
 
 
 
@@ -147,20 +150,20 @@ public class CreateMap : MonoBehaviour
 	IEnumerator Start()
 	{
 		
+		
 		loader = GameObject.Find ("Loader").GetComponent<Loader>(); // This script now requires a loader object to be present from prior scene
 		gvrViewer.VRModeEnabled = loader.vrMode;
 		MainCamera = GameObject.Find ("Main Camera");
 		mediaPlayer = videoPlane.transform.GetChild(0).GetComponent<MediaPlayerCtrl>();
 		audioMediaPlayer = audioManager.GetComponent<MediaPlayerCtrl>();
-		SetAppState(AppStateType.STATE_APP_LOADING); 						//We call this funtion to set the LOADING state as initial state when the app starts
 
 
 
 
 		//FUNCION FIX PROTOTIPE   
 		readJSON = GameObject.Find("sphere3").GetComponent<ReadJSONFILE>();
-		navPanel = GameObject.Find("GameObject");
-
+		//navPanel = GameObject.Find("GameObject");
+		CreateGameObjectButton();   // Called this function at first to create navpanel object needed
 
 		sphere3 = gameObject;
 		//centerTemp = readJSON.center;                                    //Rescatamos el objeto scene que contiene toda la informacion del JSON   
@@ -181,8 +184,27 @@ public class CreateMap : MonoBehaviour
 			//centerTemp = readJSON.center;                                    //Rescatamos el objeto scene que contiene toda la informacion del JSON   
 			centerTemp =  this.GetComponent<ReadJSONFILE>().center;
 
+
+
+			//Add Total poi ids for this floor into a list For preloading purpose we check wether the Poi has been previously downloaded
+			foreach (Floor f in centerTemp.floors) 
+			{
+				foreach (Poi p in f.pois)
+				{
+
+
+					preloaded.Add (p._id);	
+
+
+
+				}
+			}
+
+
+
+
 			//Debug.Log (centerTemp.floors[0].pois[0]._id);
-			Debug.Log("poiID: "+centerTemp.firstPoiID+ "floorID: "+centerTemp.firstFloorID);
+			//Debug.Log("poiID: "+centerTemp.firstPoiID+ "floorID: "+centerTemp.firstFloorID);
 			InitScene(centerTemp.firstPoiID, centerTemp.firstFloorID);                            //LLamamos a aplicar la primera escena por primera vez, rescantando el firsphotoId             
 			//BrowseTooltip(poiTemp);                                       //Buscamos los tootltip que tiene la imagen
 
@@ -191,8 +213,16 @@ public class CreateMap : MonoBehaviour
 
         
 		//  SetAppState(AppStateType.STATE_APP_IDLE);   						// Changed this intruction to the DownloadImage function. Once we load, we change to idle state and await user input
-		SetAppState(AppStateType.STATE_APP_LOADING); 						//We call this funtion to set the LOADING state as initial state when the app starts
+
 		menuContainer.GetComponent<GenericMenu>().UpdateMenu();
+		//preloaded.Add (null);
+		//savedImages.Add (null);
+
+		//SetAppState(AppStateType.STATE_APP_LOADING); 						//We call this funtion to set the LOADING state as initial state when the app starts
+
+
+
+
 	}
 
 
@@ -226,7 +256,7 @@ public class CreateMap : MonoBehaviour
 
 			ImagePlaneTempLeft.layer = 0;
 			ImagePlaneTempRight.layer = 0;
-			MainCamera = GameObject.Find("Main Camera").transform.gameObject;
+			//MainCamera = GameObject.Find("Main Camera").transform.gameObject;
 			MainCamera.GetComponent<StereoController>().UpdateStereoValues();
 			audioMediaPlayer.Stop();
 			//soundGuide.SetActive(false);   DESCOMENTAR LUEGO DE PRUEBA
@@ -267,18 +297,13 @@ public class CreateMap : MonoBehaviour
 			//sphere3.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 1);
 			// Debug.Log("Into Idle State");
 
-			 navPanel.SetActive(true);
+			navPanel.SetActive(true);
 			menuContainer.SetActive(false);
 			imagePlane.SetActive(false);
 
 			//  btnHolder.SetActive(true);
 			break;
 
-			//imagePlane.SetActive(false);
-			// btnHolder.SetActive(true);
-			//imagePlaneStereo.SetActive (false);
-			//imagePlaneStereo.SetActive (false);
-			break;
 
 
 		case AppStateType.STATE_APP_IDLEBTN:
@@ -317,7 +342,7 @@ public class CreateMap : MonoBehaviour
 			menuContainer.transform.Rotate(new Vector3(0, camRotAngle, 0), Space.Self);
 			menuContainer.SetActive(true);
 			videoPlane.SetActive(false);
-			//navPanel.SetActive(false);
+			navPanel.SetActive(false);
 			menuContainer.SetActive(false);
 			audioPanel.SetActive(false);
 			tooltipAudioPanel.SetActive(false);
@@ -361,7 +386,7 @@ public class CreateMap : MonoBehaviour
 			loadingMessage.SetActive(false);
 			break;
 
-		case AppStateType.STATE_APP_MENU:                                    //Show navigation panel with navigation buttons
+			case AppStateType.STATE_APP_MENU:                                    //Show navigation panel with navigation buttons
 			//sphere3.GetComponent<Renderer>().material.color = new Color(0.5f, 0.5f, 0.5f, 1); // Obscure sphere 
 			//Debug.Log ("Into Menu State");
 			navPanel.SetActive (false);
@@ -370,9 +395,10 @@ public class CreateMap : MonoBehaviour
 			// audioPanel.SetActive(true);
 			tooltipAudioPanel.SetActive (false);
 			loadingMessage.SetActive (false);
-			menuContainer.transform.rotation = new Quaternion (0,0,0,0);
-			camRotAngle = MainCamera.transform.rotation.eulerAngles.y;
-			menuContainer.transform.Rotate (new Vector3 (0, -camRotAngle, 0));
+			menuContainer.transform.rotation = new Quaternion (0, 0, 0, 0);
+			camRotAngle = MainCamera.transform.rotation.eulerAngles.y - 90;
+			print (camRotAngle);
+			menuContainer.transform.Rotate (new Vector3 (0, camRotAngle, 0));
 			//print (camRotAngle);
 			break;
 
@@ -395,105 +421,97 @@ public class CreateMap : MonoBehaviour
 
 	public void InitScene(string poiID,string floorID)
 	{
-		
-       
+
 		Floor itemFloor = centerTemp.floors.Find(x => x._id == floorID);
 		Poi itemPoi = itemFloor.pois.Find(x => x._id == poiID);
-        currentFloor = itemFloor;
-        currentPoi = itemPoi;
-        //CreateMap(itemFloor);
+		currentFloor = itemFloor;
+		currentPoi = itemPoi;
 		BrowseTooltip(itemPoi);
-		StartCoroutine(DownloadImage(itemPoi.uri, itemPoi._id));
+
+	
+			//load locally
+			Resources.UnloadUnusedAssets ();
+			sphere3.GetComponent<Renderer>().material.mainTexture = Resources.Load( poiID ) as Texture;
+			SetAppState(AppStateType.STATE_APP_IDLE);
+			print ("Map Init from disk");
+
+		if (sphere3.GetComponent<Renderer>().material.mainTexture == null)
+		{
+
+			SetAppState(AppStateType.STATE_APP_LOADING);
+			StartCoroutine(DownloadImage(itemPoi.uri, itemPoi._id));
+			StartCoroutine(Reload360Image(itemPoi));
+			preloaded.Add (itemPoi._id);
+	
+		}
+
 		audioMediaPlayer.Stop();
+
 		if (itemPoi.soundGuide != null)
 		{
 			audioMediaPlayer.Load(itemPoi.soundGuide);
 			audioMediaPlayer.Play();
 		}
-		//LoadCategories();
 
-
-
-		/*
-        //print (poiID +" " + floorID);
-		currentFloor = floorID;
-		foreach (Floor f in centerTemp.floors)
-		{
-			//Debug.Log (floorID+" "+ f._id);
-			if (floorID == f._id)
-			{   //    Debug.Log ("entre");        
-				foreach (Poi p in f.pois)
-				{
-					//Debug.Log (poiID+" "+ p._id);
-					if (poiID == p._id)
-					{                        
-						poiTemp = p;
-						CreateMap(f);
-
-						BrowseTooltip(p);
-
-						StartCoroutine(DownloadImage(p.uri, p._id));
-
-						audioMediaPlayer.Stop();                     
-						if (p.soundGuide != null)
-						{                           
-							audioMediaPlayer.Load(p.soundGuide);
-							audioMediaPlayer.Play();
-						}
-					}
-
-				}
-			}
-		}
-
-		//LoadCategories ();
-		*/
 	}
 
 
 
-
-
-
-	public void ApplyScene(string floorApplyScene, string tooltipApplyScene)                                      //Metodo para aplicar y cargar cada imagen
+	public void ApplyScene(string floorApplyScene, string tooltipApplyScene)                          //Metodo para aplicar y cargar cada imagen
 	{
-		//Debug.Log("Piso : "+currentFloor);
-		//Debug.Log("Poi a cargar: "+ tooltipApplyScene);
-		//Debug.Log("Poi applyscene: " + poiApplySceneTemp._id);
+		
+
+		var itemFloor = centerTemp.floors.Find (x => x._id == floorApplyScene);
+		var itemPoi = itemFloor.pois.Find (x => x._id == tooltipApplyScene);
 
 
 
-		var itemFloor = centerTemp.floors.Find(x => x._id == floorApplyScene);
-		var itemPoi = itemFloor.pois.Find(x => x._id == tooltipApplyScene);
+		Resources.UnloadUnusedAssets();
+		//load locally
+		tex = sphere3.GetComponent<Renderer> ().material.mainTexture as Texture2D;
+		sphere3.GetComponent<Renderer> ().material.mainTexture = Resources.Load (itemPoi._id) as Texture;
 
-		//Debug.Log("currentFloor: "+currentFloor+ "y floorApplyScene: "+floorApplyScene);
+		poiTemp = itemPoi;
+		BrowseTooltip (itemPoi);
+		SetAppState (AppStateType.STATE_APP_IDLE);
+		print ("Map Loaded from disk");
 
-		if (currentFloor._id.Equals(floorApplyScene))
-		{           
-			poiTemp = itemPoi;
-			BrowseTooltip(itemPoi);
-			StartCoroutine(DownloadImage(itemPoi.uri, itemPoi._id));
-			audioMediaPlayer.Stop();
-			if (itemPoi.soundGuide != null)
-			{
-				audioMediaPlayer.Load(itemPoi.soundGuide);
-				audioMediaPlayer.Play();
-			}
-		}
-		else
+		if (sphere3.GetComponent<Renderer> ().material.mainTexture == null) 
 		{
-			Debug.Log("Cambio de piso a: " + itemFloor.floorNumber);
-			Destroy(buttonParentMap);
-			//CreateMap(itemFloor);          
-			//CreateButtonMap();
-			currentFloor = itemFloor;
+			sphere3.GetComponent<Renderer> ().material.mainTexture = tex;
+			SetAppState (AppStateType.STATE_APP_LOADING);
+			//Debug.Log("currentFloor: "+currentFloor+ "y floorApplyScene: "+floorApplyScene);
 
-		}		
+			if (currentFloor._id.Equals (floorApplyScene)) 
+			{       
+				
+				poiTemp = itemPoi;
+				BrowseTooltip (itemPoi);
+
+				StartCoroutine (DownloadImage (itemPoi.uri, itemPoi._id));
+				StartCoroutine (Reload360Image (itemPoi));
+			
+				audioMediaPlayer.Stop ();
+				if (itemPoi.soundGuide != null) {
+					audioMediaPlayer.Load (itemPoi.soundGuide);
+					audioMediaPlayer.Play ();
+				}
+			} else {
+				
+				Debug.Log ("Cambio de piso a: " + itemFloor.floorNumber);
+				Destroy (buttonParentMap);
+				//CreateMap(itemFloor);          
+				//CreateButtonMap();
+				currentFloor = itemFloor;
+
+			}
+
+			//preloaded.Add (itemPoi._id);
+		
+
+
+		}
 	}
-
-
-
-
 
 	private void ReadRotationScene(float rotationOffset)
 	{
@@ -536,14 +554,35 @@ public class CreateMap : MonoBehaviour
 	//TODO Fix this function to be more elegant
 	public void ChangeScene(string floorChangeScene,string tooltipChangeScene,Poi nextPoi)                            //Metodo que es llamado cuando se hace click en algun boton
 	{        
-		Debug.Log("Siguiente poi a cargar es: "+ tooltipChangeScene+" Poi next: "+nextPoi._id);
-        currentPoi = nextPoi;
 
-        Destroy(buttonParent);                                                                                         //Destruimos el objeto que contiene el conjunto de botones para no sobrecargar al memoria		
+		SetAppState(AppStateType.STATE_APP_LOADING);
+
+
+		 
+		foreach (Transform tr in buttonParent.transform)   		//Destroy children to clear memory
+		{
+
+			Destroy (tr.gameObject);
+
+		}
+
+
+
+			
+			Debug.Log ("Siguiente poi a cargar es: " + tooltipChangeScene + " Poi next: " + nextPoi._id);
+			currentPoi = nextPoi;
+
+
+      		
+		// Destroy(buttonParent);    Obsoleto, da problemas al perderse la referencia  	
+
+
+
+
 		ApplyScene(floorChangeScene, tooltipChangeScene);    
 		ReadRotationScene (nextPoi.rotationOffset);
-	menuContainer.GetComponentInChildren<ControllerMap> ().SwitchfromNav (nextPoi._id);
-		SetAppState(AppStateType.STATE_APP_LOADING);
+		menuContainer.GetComponentInChildren<ControllerMap> ().SwitchfromNav (nextPoi._id);
+
 
 	}
 
@@ -655,7 +694,6 @@ public class CreateMap : MonoBehaviour
 	www.LoadImageIntoTexture(tex);
 
 
-
 	//AspectRatioFitter.AspectMode.FitInParent;
 	switch (type)
 	{
@@ -681,7 +719,7 @@ public class CreateMap : MonoBehaviour
 
 		sphere3.GetComponent<Renderer>().material.mainTexture = tex;
 		//  Destroy(www);
-		SetAppState(AppStateType.STATE_APP_IDLE);
+		//SetAppState(AppStateType.STATE_APP_IDLE);
 		break;
 	case "TEXTBLOCK":
 		Debug.Log("Case TextBlock");
@@ -722,11 +760,13 @@ public class CreateMap : MonoBehaviour
 		//menuMap.GetComponent<Renderer>().material.mainTexture = null;
 //		menuMap.GetComponent<Renderer>().material.mainTexture = tex; 
 		break;
+
 	default:
 		//Debug.Log("Default case");
 		sphere3.GetComponent<Renderer>().material.mainTexture = tex;
 		SetAppState(AppStateType.STATE_APP_IDLE);                                          //We only apply the change of state once the image has loaded
-		sphere3.GetComponent<Renderer>().material.mainTexture = tex;
+		Resources.UnloadUnusedAssets ();
+
 		//ReadRotationScene(poiTemp.rotationOffset);                                         //Se obtiene la rotacion de la camara definida por el JSON
 		break;
 	}
@@ -741,7 +781,12 @@ public class CreateMap : MonoBehaviour
 	public void BrowseTooltip(Poi poiTemp)                              //Metodo para buscar todos los tooltips que contiene la escena y asi ser creados 
 	{       
 
-		CreateGameObjectButton();     
+		if (navPanel == null)
+		{
+			
+			CreateGameObjectButton ();     
+		
+		}
 
 		if (poiTemp.soundGuide != "")
 		{
@@ -1397,7 +1442,47 @@ public class CreateMap : MonoBehaviour
 
 	}
 
+	IEnumerator Reload360Image(Poi poitempz)
+	{
 
+
+		string tempUrl = serverUrl + poitempz.uri;
+		Debug.Log("Se descargara url:" + tempUrl);
+		WWW www = new WWW(tempUrl);
+		yield return www;
+
+		if (!string.IsNullOrEmpty(www.error))
+		{
+			//SetAppState(AppStateType.STATE_APP_LOADING);
+			//loadingMessage.GetComponent<Text>().text = "Compruebe su conexión a internet";
+			Debug.Log("Check internet conection " + www.error);
+
+			while (!string.IsNullOrEmpty(www.error))
+			{
+
+				www = new WWW(poitempz.uri);
+				yield return www;
+			}
+
+		}
+
+		Texture2D tex;
+		tex = new Texture2D (www.texture.width,www.texture.height , TextureFormat.ETC2_RGB, false);
+
+		www.LoadImageIntoTexture(tex);
+
+		this.gameObject.GetComponent<Renderer>().material.mainTexture = tex; 
+
+		savedImages.Add(tex);
+		print ("Map Loaded from web");
+
+		byte[] bytes = tex.EncodeToJPG(90);
+
+		File.WriteAllBytes (Application.dataPath + "/Resources/"+ poitempz._id +".jpg",bytes);
+
+
+
+	}
 
 
 }
