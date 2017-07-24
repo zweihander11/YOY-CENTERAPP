@@ -492,7 +492,8 @@ public class CreateMap : MonoBehaviour
 				StartCoroutine (Reload360Image (itemPoi));
 			
 				audioMediaPlayer.Stop ();
-				if (itemPoi.soundGuide != null) {
+				if (itemPoi.soundGuide != null) 
+				{
 					audioMediaPlayer.Load (itemPoi.soundGuide);
 					audioMediaPlayer.Play ();
 				}
