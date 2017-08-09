@@ -701,7 +701,7 @@ public class CreateMap : MonoBehaviour
 	case "image":
 		Debug.Log("Case Image");
 		//AspectRatio(www.texture.width,www.texture.height, imagePlane);
-		imagePlane.transform.GetChild(0).GetComponent<Renderer>().material.mainTexture = tex;
+			imagePlane.transform.GetChild(0).GetComponent<Renderer>().material.mainTexture = www.texture;
 		SetAppState(AppStateType.STATE_APP_IMAGE);
 		break;
 	case "PANELIMAGE":
@@ -794,6 +794,8 @@ public class CreateMap : MonoBehaviour
 			CreateButtonMenuAudio(null, poiTemp, "scaudioplay");
 			//CreateButton(null, poiBrowseTooltipTemp, "scaudiostop");
 		}
+
+		//print ("TTps in scene: "+ poiTemp.tooltips.Count);
 
         foreach (Tooltip tooltipTemp in poiTemp.tooltips)
         {
