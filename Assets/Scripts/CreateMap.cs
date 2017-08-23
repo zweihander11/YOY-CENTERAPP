@@ -527,9 +527,9 @@ public class CreateMap : MonoBehaviour
 
 	//sphere3.transform.rotation = rotationSphere;
 	//Rotate(0,0, rotationOffset)  ;
-	Debug.Log("offset sphere: "+ rotationOffset);
-	Debug.Log("rotanto  sphere global: " + sphere3.transform.rotation.eulerAngles);
-	Debug.Log("rotanto  sphere local: " + sphere3.transform.localRotation.eulerAngles);
+	//Debug.Log("offset sphere: "+ rotationOffset);
+	//Debug.Log("rotanto  sphere global: " + sphere3.transform.rotation.eulerAngles);
+	//Debug.Log("rotanto  sphere local: " + sphere3.transform.localRotation.eulerAngles);
 	//GameObject.Find("Player").transform.rotation = Quaternion.Euler(0, camRotAngle, 0);
 	}
 
@@ -701,7 +701,7 @@ public class CreateMap : MonoBehaviour
 	case "image":
 		Debug.Log("Case Image");
 		//AspectRatio(www.texture.width,www.texture.height, imagePlane);
-			imagePlane.transform.GetChild(0).GetComponent<Renderer>().material.mainTexture = www.texture;
+		imagePlane.transform.GetChild(0).GetComponent<Renderer>().material.mainTexture = tex; // www.texture?
 		SetAppState(AppStateType.STATE_APP_IMAGE);
 		break;
 	case "PANELIMAGE":
@@ -816,7 +816,7 @@ public class CreateMap : MonoBehaviour
                 CreateButton(tooltipTemp, poiTemp, tooltipTemp.type);
             }
 
-            if ("PANELIMAGE" == tooltipTemp.type && tooltipTemp.text != null)
+			if ("PANELIMAGE" == tooltipTemp.type ) // && tooltipTemp.text != null
             {
                 //nameButton = tooltipTemp.attributionUri;
                 CreateButton(tooltipTemp, poiTemp, tooltipTemp.type);
@@ -952,6 +952,7 @@ public class CreateMap : MonoBehaviour
             */
           
             navPoint.transform.Rotate(new Vector3(0, float.Parse(tooltipTemp.position[0].ToString()), 0), Space.Self);
+			navPoint.transform.Rotate(new Vector3(float.Parse(tooltipTemp.position[1].ToString()), 0, 0), Space.Self);
             navPoint.transform.Translate(new Vector3(0, 0, 3.5f), Space.Self);
             entry.callback.AddListener((data) => LoadVideo(tooltipTemp));
 			//point.gameObject.name = tooltipTemp.linkedPoiID;
@@ -969,6 +970,7 @@ public class CreateMap : MonoBehaviour
 				
 				
 			navPoint.transform.Rotate(new Vector3(0, 360 - float.Parse(tooltipTemp.position[0].ToString()), 0), Space.Self);
+			navPoint.transform.Rotate(new Vector3(float.Parse(tooltipTemp.position[1].ToString()), 0, 0), Space.Self);
             navPoint.transform.Translate(new Vector3(0, 0, 3.5f), Space.Self);
             x1 = navPoint.transform.position.x;
             y1 = navPoint.transform.position.y;
@@ -991,6 +993,7 @@ public class CreateMap : MonoBehaviour
             */
           
             navPoint.transform.Rotate(new Vector3(0, float.Parse(tooltipTemp.position[0].ToString()), 0), Space.Self);
+	navPoint.transform.Rotate(new Vector3(float.Parse(tooltipTemp.position[1].ToString()), 0, 0), Space.Self);
             navPoint.transform.Translate(new Vector3(0, 0, 3.5f), Space.Self);
             navPoint.transform.GetChild (0).GetComponent<TextMeshPro> ().text = "";
 			entry.callback.AddListener((data) => LoadPanelImage(tooltipTemp));
@@ -1006,6 +1009,7 @@ public class CreateMap : MonoBehaviour
             */
          
             navPoint.transform.Rotate(new Vector3(0, float.Parse(tooltipTemp.position[0].ToString()), 0), Space.Self);
+			navPoint.transform.Rotate(new Vector3(float.Parse(tooltipTemp.position[1].ToString()), 0, 0), Space.Self);
             navPoint.transform.Translate(new Vector3(0, 0, 3.5f), Space.Self);
             entry.callback.AddListener((data) =>  Load360(tooltipTemp));
 			//point.gameObject.name = tooltipTemp.linkedPoiID;
@@ -1021,6 +1025,7 @@ public class CreateMap : MonoBehaviour
             */
            
             navPoint.transform.Rotate(new Vector3(0, float.Parse(tooltipTemp.position[0].ToString()), 0), Space.Self);
+			navPoint.transform.Rotate(new Vector3(float.Parse(tooltipTemp.position[1].ToString()), 0, 0), Space.Self);
             navPoint.transform.Translate(new Vector3(0, 0, 3.5f), Space.Self);
             entry.callback.AddListener((data) =>   ImageStereo(tooltipTemp));
 		}
@@ -1034,6 +1039,7 @@ public class CreateMap : MonoBehaviour
             */
            
             navPoint.transform.Rotate(new Vector3(0, float.Parse(tooltipTemp.position[0].ToString()), 0), Space.Self);
+			navPoint.transform.Rotate(new Vector3(float.Parse(tooltipTemp.position[1].ToString()), 0, 0), Space.Self);
             navPoint.transform.Translate(new Vector3(0, 0, 3.5f), Space.Self);
             entry.callback.AddListener((data) =>    LoadTextBlock(tooltipTemp));
 
@@ -1054,7 +1060,7 @@ public class CreateMap : MonoBehaviour
 
 			if (tooltipTemp._id == tooltipAudioPanel.transform.GetChild(i).name )
 			{
-				Debug.Log("ESTE: " + tooltipTemp._id + " CON ESTE: " + tooltipAudioPanel.transform.GetChild(i).name);
+				//Debug.Log("ESTE: " + tooltipTemp._id + " CON ESTE: " + tooltipAudioPanel.transform.GetChild(i).name);
 				soundGuide = tooltipAudioPanel.transform.GetChild(i).gameObject;
 				tooltipAudioPanel.transform.GetChild(i).gameObject.SetActive(true);
 			}
@@ -1245,10 +1251,10 @@ public class CreateMap : MonoBehaviour
 
 	}
 
-	public void StateIdleUpdate()
+	public void StateIdleUpdate()  // Called to make menu button appear
 	{
 		
-		if (MainCamera.transform.localRotation.eulerAngles.x > 30.0f && MainCamera.transform.localRotation.eulerAngles.x < 50.0f)  				 //Show menu button
+		if (MainCamera.transform.localRotation.eulerAngles.x > 50.0f && MainCamera.transform.localRotation.eulerAngles.x < 70.0f)  				 //Show menu button
 		{
 
 			SetAppState (AppStateType.STATE_APP_IDLEBTN);
