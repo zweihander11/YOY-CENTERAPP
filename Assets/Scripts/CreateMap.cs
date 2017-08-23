@@ -87,6 +87,7 @@ public class CreateMap : MonoBehaviour
 	public GameObject loadingMessage;
 	public GameObject referenceObject;
 	public GameObject navPointPrefab;
+	public Texture2D navPointTexture;
 	private ColorBlock theColor;
 
 
@@ -960,18 +961,15 @@ public class CreateMap : MonoBehaviour
 		}
 		if (type == "GATE")
 		{
-            /*
-            newButton.name = tooltipTemp.linkedPoiID;
-            newButton.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 300);
-            newButton.onClick.AddListener(() => ChangeScene(tooltipTemp.floorID,tooltipTemp.linkedPoiID, poiButtonTemp));
-            newButton.GetComponent<Image>().color = new Color(0.70f, 0.70f, 0.70f, 1);
-            */
+          
 
-				
-				
+			// When creating this button use the navigation texture 		
+			navPoint.GetComponent<MeshRenderer>().material.color = new Color(0, 0.596f, 0.980f, 0.6f);
+			navPoint.GetComponent<MeshRenderer> ().material.mainTexture = navPointTexture;
 			navPoint.transform.Rotate(new Vector3(0, 360 - float.Parse(tooltipTemp.position[0].ToString()), 0), Space.Self);
 			navPoint.transform.Rotate(new Vector3(float.Parse(tooltipTemp.position[1].ToString()), 0, 0), Space.Self);
             navPoint.transform.Translate(new Vector3(0, 0, 3.5f), Space.Self);
+			navPoint.transform.Rotate(new Vector3(-30, 0, 0), Space.Self);
             x1 = navPoint.transform.position.x;
             y1 = navPoint.transform.position.y;
             z1 = navPoint.transform.position.z;
@@ -985,16 +983,12 @@ public class CreateMap : MonoBehaviour
 
 		if (type == "PANELIMAGE")
 		{
-            /*
-            newButton.onClick.AddListener(() => LoadPanelImage(tooltipTemp));
-            newButton.GetComponent<Image>().color = new Color(0.01f, 0.44f, 0.051f, 0.5f);
-            newButton.GetComponentInChildren<Text>().text = "";
-            //newButton.GetComponent<Image>().color = Color.clear;
-            */
+            
           
             navPoint.transform.Rotate(new Vector3(0, float.Parse(tooltipTemp.position[0].ToString()), 0), Space.Self);
 	navPoint.transform.Rotate(new Vector3(float.Parse(tooltipTemp.position[1].ToString()), 0, 0), Space.Self);
             navPoint.transform.Translate(new Vector3(0, 0, 3.5f), Space.Self);
+			navPoint.transform.localScale = new Vector3 (0.2f,0.2f,0.2f);
             navPoint.transform.GetChild (0).GetComponent<TextMeshPro> ().text = "";
 			entry.callback.AddListener((data) => LoadPanelImage(tooltipTemp));
 			//point.gameObject.name = tooltipTemp.linkedPoiID;
