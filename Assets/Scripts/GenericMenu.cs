@@ -170,8 +170,8 @@ public class GenericMenu : MonoBehaviour
 		case MenuState.ACTIVE:
 			//Debug.Log ("Into Active State");
 			if (showCentralPanel) { centralPanel.SetActive (true);}
-			if (showleftPanel) { leftPanel.SetActive (true);  }
-			if (showrightPanel) { rightPanel.SetActive (true); }
+			if (showleftPanel) { leftPanel.SetActive (true);}
+			if (showrightPanel) { rightPanel.SetActive (true);}
 			if (showFollowPanel) { followUpPanel.SetActive (true); }
 
 
@@ -231,13 +231,13 @@ public class GenericMenu : MonoBehaviour
 
 		if (cw && degreesToRotate > 0) 
 		{
-			print (degrees);
+			//print (degrees);
 			this.gameObject.transform.Rotate (new Vector3(0,degrees,0));
 
 		} 
 		else if (!cw && degreesToRotate > 0) 
 		{
-			print (degrees);
+			//print (degrees);
 			this.gameObject.transform.Rotate (new Vector3(0,-degrees,0));
 
 		}

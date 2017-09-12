@@ -30,6 +30,8 @@ public class CreateMap : MonoBehaviour
 		}
 	}
 
+	public bool offLineMode; // A global variable to control whether the app should work locally without intetrnet
+
 	Loader loader;
 	public GvrViewer gvrViewer;
 	MediaPlayerCtrl mediaPlayer;
@@ -73,6 +75,7 @@ public class CreateMap : MonoBehaviour
 	//public Dictionary<object, List<string>> dictCategories;
 
 	// public GameObject hudPanel;
+	public GameObject tutorialPanel;
 	private GameObject menuMap;
 	public GameObject navPanel;
 	//public GameObject btnHolder;
@@ -88,6 +91,7 @@ public class CreateMap : MonoBehaviour
 	public GameObject referenceObject;
 	public GameObject navPointPrefab;
 	public Texture2D navPointTexture;
+	public Texture2D navVideoTexture;
 	private ColorBlock theColor;
 
 
@@ -130,7 +134,7 @@ public class CreateMap : MonoBehaviour
 
 
 		STATE_APP_IDLE,
-		STATE_APP_IDLEBTN,   // Same as Idle state used to control appearance of menu button.
+		STATE_APP_IDLEBTN,   					// Same as Idle state used to control appearance of menu button.
 		STATE_APP_LOADING,
 		STATE_APP_IMAGE,
 		STATE_APP_VIDEO,
@@ -145,7 +149,7 @@ public class CreateMap : MonoBehaviour
 
 
 
-	//private AppStateType nextState;                                     // Store the next state to set after loading
+	//private AppStateType nextState;                               // Store the next state to set after loading
 
 
 	IEnumerator Start()
@@ -157,7 +161,7 @@ public class CreateMap : MonoBehaviour
 		MainCamera = GameObject.Find ("Main Camera");
 		mediaPlayer = videoPlane.transform.GetChild(0).GetComponent<MediaPlayerCtrl>();
 		audioMediaPlayer = audioManager.GetComponent<MediaPlayerCtrl>();
-
+		audioMediaPlayer.m_bLoop = false;			 // Do not loop audio unless otherwise stated
 
 
 
@@ -202,12 +206,18 @@ public class CreateMap : MonoBehaviour
 			}
 
 
+			//tutorialPanel.transform.GetChild(0).gameObject.AddComponent<EventTrigger>();
+			EventTrigger.Entry entry3 = new EventTrigger.Entry ();
+			entry3.eventID = EventTriggerType.PointerClick;
+			entry3.callback.AddListener((data) => TutorialOut());
+			tutorialPanel.transform.GetChild(0).gameObject.GetComponent<EventTrigger>().triggers.Add (entry3);
+			tutorialPanel.transform.GetChild(0).gameObject.name = "Cerrar Tutorial";  
 
 
-			//Debug.Log (centerTemp.floors[0].pois[0]._id);
-			//Debug.Log("poiID: "+centerTemp.firstPoiID+ "floorID: "+centerTemp.firstFloorID);
+			// We call the initial STATE inside the IntitScene() function:
+
 			InitScene(centerTemp.firstPoiID, centerTemp.firstFloorID);                            //LLamamos a aplicar la primera escena por primera vez, rescantando el firsphotoId             
-			//BrowseTooltip(poiTemp);                                       //Buscamos los tootltip que tiene la imagen
+
 
 
 		}
@@ -253,35 +263,39 @@ public class CreateMap : MonoBehaviour
 			MainCameraRightTemp.GetComponent<GvrEye>().toggleCullingMask = LayerMask.GetMask("Nothing");
 			ImagePlaneTempLeft = imagePlane.transform.GetChild(0).gameObject;
 			ImagePlaneTempRight = imagePlane.transform.GetChild(1).gameObject;
-
-
 			ImagePlaneTempLeft.layer = 0;
 			ImagePlaneTempRight.layer = 0;
 			//MainCamera = GameObject.Find("Main Camera").transform.gameObject;
 			MainCamera.GetComponent<StereoController>().UpdateStereoValues();
 			audioMediaPlayer.Stop();
-			//soundGuide.SetActive(false);   DESCOMENTAR LUEGO DE PRUEBA
+			soundGuide.SetActive(false);  // DESCOMENTAR LUEGO DE PRUEBA
 
 			break;
-		case AppStateType.STATE_APP_VIDEO:
+			case AppStateType.STATE_APP_VIDEO:
 			//Debug.Log("Out of Loading State");
-			videoPlane.transform.GetChild(0).GetComponent<MediaPlayerCtrl>().Stop();
-			videoPlane.transform.GetChild(0).GetComponent<MediaPlayerCtrl>().UnLoad();
-			videoPlane.SetActive(false);
-			menuContainer.SetActive(false);
+			videoPlane.transform.GetChild (0).GetComponent<MediaPlayerCtrl> ().Stop ();
+			videoPlane.transform.GetChild (0).GetComponent<MediaPlayerCtrl> ().UnLoad ();
+			videoPlane.SetActive (false);
+			menuContainer.SetActive (false);
+			audioMediaPlayer.Stop ();
+			mediaPlayer.Stop ();
+			mediaPlayer.UnLoad();
+			//mediaPlayer.OnVideoFirstFrameReady ();
+
 			break;
 		case AppStateType.STATE_APP_TEXT:
 			soundGuide.SetActive(false);
+			audioMediaPlayer.Stop();
 			//Debug.Log("Out Loading State");
 			break;
 		case AppStateType.STATE_APP_IDLE:
 			//Debug.Log("Out of Idle State");
 			//navPanel.SetActive (false);
+			audioMediaPlayer.Stop();
 			break;
-		case AppStateType.STATE_APP_IDLEBTN:
-			//Debug.Log("Out of Idle btn State");
-			//ShowMenuButton ();
-
+		case AppStateType.STATE_APP_TUTORIAL:
+			tutorialPanel.SetActive (false);
+			navPanel.SetActive (true);
 			break;
 
 		}
@@ -293,6 +307,12 @@ public class CreateMap : MonoBehaviour
 		// (3) State Enter Actions:
 		switch (currentState)
 		{
+
+			case AppStateType.STATE_APP_TUTORIAL:
+			print ("In tut");
+			navPanel.SetActive (false);
+			break;
+
 
 		case AppStateType.STATE_APP_IDLE:                                    //Show navigation panel with navigation buttons
 			//sphere3.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 1);
@@ -334,6 +354,7 @@ public class CreateMap : MonoBehaviour
 			menuContainer.SetActive(false);
 			tooltipAudioPanel.SetActive(true);
 			loadingMessage.SetActive(false);
+			audioMediaPlayer.Play();
 
 			break;
 		case AppStateType.STATE_APP_LOADING:
@@ -349,7 +370,7 @@ public class CreateMap : MonoBehaviour
 			tooltipAudioPanel.SetActive(false);
 			//loadingMessage.GetComponent<Text>().text = "Cargando...";
 			loadingMessage.SetActive(true);
-
+			audioMediaPlayer.Stop();
 			imagePlane.transform.rotation = new Quaternion(0, 0, 0, 0);    //Rotate the image plane so it's located in front of the camera. Reset rotation first
 			camRotAngle = GameObject.Find("Main Camera").transform.rotation.eulerAngles.y;
 			imagePlane.transform.Rotate(new Vector3(0, camRotAngle, 0), Space.Self);
@@ -370,21 +391,22 @@ public class CreateMap : MonoBehaviour
 			loadingMessage.SetActive(false);
 			break;
 
-		case AppStateType.STATE_APP_VIDEO:
+			case AppStateType.STATE_APP_VIDEO:
 			//sphere3.GetComponent<Renderer>().material.color = new Color(0.5f, 0.5f, 0.5f, 1);
-			Debug.Log("Into Video State");
-			videoPlane.SetActive(true);
+			Debug.Log ("Into Video State");
+			videoPlane.SetActive (true);
 			//videoPlane.transform.GetChild(0).GetComponent<MediaPlayerCtrl>().m_strFileName = 
-			navPanel.SetActive(false);
-			videoPlane.transform.rotation = new Quaternion(0, 0, 0, 0);
-			camRotAngle = GameObject.Find("Main Camera").transform.rotation.eulerAngles.y;               
-			videoPlane.transform.Rotate(new Vector3(0, camRotAngle, 0));
-			menuContainer.SetActive(true);
-			menuContainer.transform.rotation = new Quaternion(0, 0, 0, 0);
-			menuContainer.transform.Rotate(new Vector3(0, camRotAngle, 0));
-			menuContainer.SetActive(false);
-			tooltipAudioPanel.SetActive(true);
-			loadingMessage.SetActive(false);
+			navPanel.SetActive (false);
+			videoPlane.transform.rotation = new Quaternion (0, 0, 0, 0);
+			camRotAngle = GameObject.Find ("Main Camera").transform.rotation.eulerAngles.y;               
+			videoPlane.transform.Rotate (new Vector3 (0, camRotAngle, 0));
+			menuContainer.SetActive (true);
+			menuContainer.transform.rotation = new Quaternion (0, 0, 0, 0);
+			menuContainer.transform.Rotate (new Vector3 (0, camRotAngle, 0));
+			menuContainer.SetActive (false);
+			tooltipAudioPanel.SetActive (true);
+			loadingMessage.SetActive (false);
+
 			break;
 
 			case AppStateType.STATE_APP_MENU:                                    //Show navigation panel with navigation buttons
@@ -433,7 +455,7 @@ public class CreateMap : MonoBehaviour
 			//load locally
 			Resources.UnloadUnusedAssets ();
 			sphere3.GetComponent<Renderer>().material.mainTexture = Resources.Load( poiID ) as Texture;
-			SetAppState(AppStateType.STATE_APP_IDLE);
+			SetAppState(AppStateType.STATE_APP_TUTORIAL);
 			print ("Map Init from disk");
 
 		if (sphere3.GetComponent<Renderer>().material.mainTexture == null)
@@ -703,7 +725,8 @@ public class CreateMap : MonoBehaviour
 		Debug.Log("Case Image");
 		//AspectRatio(www.texture.width,www.texture.height, imagePlane);
 		imagePlane.transform.GetChild(0).GetComponent<Renderer>().material.mainTexture = tex; // www.texture?
-		SetAppState(AppStateType.STATE_APP_IMAGE);
+
+			SetAppState(AppStateType.STATE_APP_IMAGE);
 		break;
 	case "PANELIMAGE":
 		imagePlane.transform.GetChild(0).GetComponent<Renderer>().material.mainTexture = tex;
@@ -811,13 +834,13 @@ public class CreateMap : MonoBehaviour
                 CreateButton(tooltipTemp, poiTemp, tooltipTemp.type);
             }
 
-            if ("VIDEO" == tooltipTemp.type && tooltipTemp.attributionUri != null)
+            if ("VIDEO" == tooltipTemp.type )
             {
                 //nameButton = tooltipTemp.attributionUri;
                 CreateButton(tooltipTemp, poiTemp, tooltipTemp.type);
             }
 
-			if ("PANELIMAGE" == tooltipTemp.type ) // && tooltipTemp.text != null
+		if ("PANELIMAGE" == tooltipTemp.type ) // && tooltipTemp.text != null
             {
                 //nameButton = tooltipTemp.attributionUri;
                 CreateButton(tooltipTemp, poiTemp, tooltipTemp.type);
@@ -844,7 +867,9 @@ public class CreateMap : MonoBehaviour
 
 
 
-	private void CreateButtonMenuAudio(Tooltip tooltipTemp,Poi poiButtonMenuAudioTemp, string type) {
+	private void CreateButtonMenuAudio(Tooltip tooltipTemp,Poi poiButtonMenuAudioTemp, string type) 
+	{
+		
 		GameObject goButtonPlay = Instantiate(Button);
 		GameObject goButtonStop = Instantiate(Button);
 		goButtonPlay.transform.SetParent(buttonParent.transform, false);
@@ -945,15 +970,16 @@ public class CreateMap : MonoBehaviour
 		//point.transform.GetChild(0).GetComponent<TextMeshPro>().text =  (i+1).ToString();
 
 
-		if (type == "VIDEO")
+		if (type == "VIDEO") // Change button texture when loading a video tooltip
 		{
             /*
             newButton.onClick.AddListener(() => LoadVideo(tooltipTemp));
             newButton.GetComponent<Image>().color = Color.clear;
             */
-          
+			navPoint.GetComponent<MeshRenderer>().material.color = new Color(0.56f, 0.07f, 0.07f, 0.6f);
+			navPoint.GetComponent<MeshRenderer> ().material.mainTexture = navVideoTexture;
             navPoint.transform.Rotate(new Vector3(0, float.Parse(tooltipTemp.position[0].ToString()), 0), Space.Self);
-			navPoint.transform.Rotate(new Vector3(float.Parse(tooltipTemp.position[1].ToString()), 0, 0), Space.Self);
+		navPoint.transform.Rotate(new Vector3(float.Parse(tooltipTemp.position[1].ToString()), 0, 0), Space.Self);
             navPoint.transform.Translate(new Vector3(0, 0, 3.5f), Space.Self);
             entry.callback.AddListener((data) => LoadVideo(tooltipTemp));
 			//point.gameObject.name = tooltipTemp.linkedPoiID;
@@ -964,7 +990,7 @@ public class CreateMap : MonoBehaviour
           
 
 			// When creating this button use the navigation texture 		
-			navPoint.GetComponent<MeshRenderer>().material.color = new Color(0, 0.596f, 0.980f, 0.6f);
+			navPoint.GetComponent<MeshRenderer>().material.color = new Color(0.12f, 0.34f, 0.70f, 0.6f);
 			navPoint.GetComponent<MeshRenderer> ().material.mainTexture = navPointTexture;
 			navPoint.transform.Rotate(new Vector3(0, 360 - float.Parse(tooltipTemp.position[0].ToString()), 0), Space.Self);
 			navPoint.transform.Rotate(new Vector3(float.Parse(tooltipTemp.position[1].ToString()), 0, 0), Space.Self);
@@ -984,7 +1010,7 @@ public class CreateMap : MonoBehaviour
 		if (type == "PANELIMAGE")
 		{
             
-          
+			navPoint.GetComponent<MeshRenderer>().material.color = new Color(0.70f, 0.16f, 0.16f, 0.6f);
             navPoint.transform.Rotate(new Vector3(0, float.Parse(tooltipTemp.position[0].ToString()), 0), Space.Self);
 	navPoint.transform.Rotate(new Vector3(float.Parse(tooltipTemp.position[1].ToString()), 0, 0), Space.Self);
             navPoint.transform.Translate(new Vector3(0, 0, 3.5f), Space.Self);
@@ -1126,7 +1152,7 @@ public class CreateMap : MonoBehaviour
 		{            
 			audioMediaPlayer.Stop();
 			audioMediaPlayer.Load(url);
-			audioMediaPlayer.Play();
+			//audioMediaPlayer.Play(); // Call this instruction when entering states
 
 		}
 
@@ -1156,23 +1182,60 @@ public class CreateMap : MonoBehaviour
 	private void LoadVideo(Tooltip tooltipTemp)
 	{
 		audioMediaPlayer.Stop();
-		string urlvideo = tooltipTemp.sourceVideo;        
-		SetAppState(AppStateType.STATE_APP_VIDEO);      
-		videoPlane.transform.GetChild(0).GetComponent<MediaPlayerCtrl>().m_strFileName = urlvideo;
+		string urlvideo = tooltipTemp.sourceVideo;  
+		if (offLineMode) 
+		{
 
+			//SetAppState (AppStateType.STATE_APP_VIDEO);  
+			print ("attempting to load offline vid");
+			videoPlane.transform.GetChild (0).GetComponent<MediaPlayerCtrl> ().m_strFileName = urlvideo;
+		} 
+		else
+		{
+
+			      
+			//SetAppState (AppStateType.STATE_APP_VIDEO); 
+			videoPlane.transform.GetChild (0).GetComponent<MediaPlayerCtrl> ().m_strFileName = urlvideo;
+
+		}
+
+		mediaPlayer.Load (urlvideo);
+		SetAppState (AppStateType.STATE_APP_VIDEO); 
 
 	}
 
 	private void LoadPanelImage(Tooltip tooltipTemp)
 	{
+		bool isLandscape = true;
 		BrowseChild(tooltipTemp);
 		SetAppState(AppStateType.STATE_APP_LOADING);
 		string uriImage = tooltipTemp.source;
 		string text2write = tooltipTemp.text;
+		imagePlane.transform.GetChild(2).transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = tooltipTemp.title; // Finds title text object
 		imagePlane.transform.GetChild(1).gameObject.SetActive(false);  
 		SetText(text2write);      
 		ManageAudio("play", tooltipTemp.soundGuide);
-		StartCoroutine(DownloadImage(uriImage, "image"));    
+		StartCoroutine(DownloadImage(uriImage, "image"));   
+
+		if (tooltipTemp.width > tooltipTemp.height)   // Rotate the plane for landscape or portrait picture purpose
+		{
+			
+			if (!isLandscape)
+			{
+				imagePlane.transform.Rotate (0, 0, -90);
+				isLandscape = true;
+			}
+		} 
+		else 
+		{
+			if (isLandscape)
+			{
+			
+				imagePlane.transform.Rotate (0, 0, 90);
+				isLandscape = false;
+			}
+		}
+
 
 	}
 
@@ -1483,6 +1546,14 @@ public class CreateMap : MonoBehaviour
 
 		File.WriteAllBytes (Application.dataPath + "/Resources/"+ poitempz._id +".jpg",bytes);
 
+
+
+	}
+
+	public void TutorialOut()  // Method call from button to exit tutorial State and enter Idle state
+	{
+
+		SetAppState (AppStateType.STATE_APP_IDLE);
 
 
 	}
